@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie/State/movie_provider.dart';
+import 'package:movie/State/theme_provider.dart';
 import 'package:movie/screens/movie_details_Screen.dart';
 import 'package:movie/screens/search_Screen.dart';
 import 'package:movie/widgets/banner_widget.dart';
@@ -23,11 +24,20 @@ class HomeScreen extends ConsumerWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('Movies',style: TextStyle(color: Colors.white)),
+        title: const Text('Movies', style: TextStyle(color: Colors.white)),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Icon(Icons.person),
+          Consumer(
+            builder: (context, ref, _) {
+              final isDark = ref.watch(themeProvider) == ThemeMode.dark;
+
+              return IconButton(
+                icon: Icon(isDark ? Icons.dark_mode : Icons.light_mode),
+                onPressed: () {
+                  ref.read(themeProvider.notifier).state =
+                      isDark ? ThemeMode.light : ThemeMode.dark;
+                },
+              );
+            },
           ),
         ],
       ),
@@ -121,8 +131,8 @@ class HomeScreen extends ConsumerWidget {
                   );
                 },
                 child: Container(
-                  width:140,
-                  margin: const EdgeInsets.only(left:12),
+                  width: 140,
+                  margin: const EdgeInsets.only(left: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -141,24 +151,26 @@ class HomeScreen extends ConsumerWidget {
                       Text(
                         movie['title'] ?? 'No Title',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
 
                       const SizedBox(height: 4),
 
                       Row(
                         children: [
-                          const Icon(Icons.star, color: Colors.yellow,size: 14),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: 14,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             movie['vote_average'].toString(),
-                            style:const TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
