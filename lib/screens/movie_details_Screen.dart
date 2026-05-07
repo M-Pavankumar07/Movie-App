@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie/State/favorites_provider.dart';
+import 'package:movie/screens/cast_Screen.dart';
 import 'package:movie/screens/trailer_Screen.dart';
 import 'package:movie/services/trailer_service.dart';
 import 'package:movie/utils/flutter_toast_message.dart';
@@ -81,6 +82,17 @@ class MovieDetailsScreen extends ConsumerWidget {
                 icon: const Icon(Icons.play_arrow),
                 label: const Text("Watch Trailer"),
               ),
+
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CastScreen(movieId: movie['id'])),
+                  );
+                },
+                icon: const Icon(Icons.people),
+                label: const Text("View Cast"),
+              )
             ],
           ),
         ),
