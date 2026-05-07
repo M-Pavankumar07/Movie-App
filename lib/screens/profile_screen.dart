@@ -6,10 +6,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text("Profile", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.black,
+        title: const Text("Profile",),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -23,10 +23,10 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 15),
 
-            const Text(
+            Text(
               "Pavan Kumar",
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
@@ -34,17 +34,19 @@ class ProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 5),
 
-            const Text("Movie Lover", style: TextStyle(color: Colors.grey)),
+            Text("Movie Lover", style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
 
             const SizedBox(height: 30),
 
             buildTile(
+              context: context,
               icon: Icons.dark_mode,
               title: "Dark Mode",
               trailing: Switch(value: true, onChanged: (val) {}),
             ),
 
             buildTile(
+              context: context,
               icon: Icons.info,
               title: "About App",
               onTap: () {
@@ -58,6 +60,7 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             buildTile(
+              context: context,
               icon: Icons.logout,
               title: "Logout",
               onTap: () {},
@@ -68,10 +71,10 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget buildTile({required IconData icon, required String title, Widget? trailing, VoidCallback? onTap}) {
+  Widget buildTile({required BuildContext context, required IconData icon, required String title, Widget? trailing, VoidCallback? onTap}) {
     return ListTile(
       leading: Icon(icon, color: Colors.red),
-      title: Text(title, style: const TextStyle(color: Colors.white)),
+      title: Text(title, style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color)),
       trailing: trailing ?? const Icon(Icons.arrow_forward_ios, color: Colors.grey),
       onTap: onTap,
     );

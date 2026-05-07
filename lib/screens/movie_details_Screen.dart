@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie/State/favorites_provider.dart';
+import 'package:movie/screens/trailer_Screen.dart';
+import 'package:movie/services/trailer_service.dart';
+import 'package:movie/utils/flutter_toast_message.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
   final Map movie;
@@ -13,8 +16,10 @@ class MovieDetailsScreen extends ConsumerWidget {
         .watch(favoritesProvider)
         .any((m) => m['id'] == movie['id']);
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(backgroundColor: Colors.black),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -27,12 +32,18 @@ class MovieDetailsScreen extends ConsumerWidget {
               const SizedBox(height: 10),
               Text(
                 movie['title'] ?? "",
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                  fontSize: 20,
+                ),
               ),
               const SizedBox(height: 10),
               Text(
                 movie['overview'] ?? "",
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                  fontSize: 16,
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -41,21 +52,34 @@ class MovieDetailsScreen extends ConsumerWidget {
                 onPressed: () {
                   favNotifier.toggleFavorite(movie);
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        isFav ? "Removed from Favorites" : "Added to Favorites",
-                      ),
-                    ),
+                  ToastMessage.showToast(
+                    isFav ? "Removed from Favorites" : "Added to Favorites",
+                    isError: isFav,
                   );
-                  
                 },
-                icon:
-                  Icon(
-                    isFav ? Icons.favorite : Icons.favorite_border,
-                    color: Colors.red,
-                  ),
-                label: Text(isFav ? "Remove from Favorites" : "Add to Favorites"),
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                label: Text(
+                  isFav ? "Remove from Favorites" : "Add to Favorites",
+                ),
+              ),
+
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final trailerKey = await TrailerService.fetchTrailer(movie['id']);
+                  if (trailerKey != null){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TrailerScreen(videoId: trailerKey)),
+                    );
+                  }else{
+                    ToastMessage.showToast("Trailer not available", isError: true);
+                  }
+                },
+                icon: const Icon(Icons.play_arrow),
+                label: const Text("Watch Trailer"),
               ),
             ],
           ),

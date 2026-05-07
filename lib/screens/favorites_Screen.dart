@@ -19,17 +19,17 @@ class FavoritesScreen extends ConsumerWidget {
     final favorites = ref.watch(favoritesProvider);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: const Text("Favorites"),
       ),
 
       body: favorites.isEmpty
-          ? const Center(
+          ? Center(
               child: Text(
                 "No favorites added yet.",
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color, fontSize: 18),
               ),
             )
           : GridView.builder(
@@ -70,9 +70,7 @@ class FavoritesScreen extends ConsumerWidget {
 
                         Text(
                           movie['title'] ?? "No Title",
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
+                          style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                           overflow: TextOverflow.ellipsis,
                         )
                       ],

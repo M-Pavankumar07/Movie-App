@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Screens[_bottomNavIndex],
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
@@ -50,6 +50,8 @@ class _MainScreenState extends State<MainScreen> {
          notchSmoothness: NotchSmoothness.softEdge,
          leftCornerRadius: 10,
          rightCornerRadius: 10,
+         activeColor: Colors.red,
+         inactiveColor: Colors.black,
         onTap: (index){
           setState(() {
             _bottomNavIndex = index;

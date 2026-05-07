@@ -21,10 +21,10 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final movieAsync = ref.watch(movieProvider);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text('Movies', style: TextStyle(color: Colors.white)),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        title: const Text('Movies',),
         actions: [
           Consumer(
             builder: (context, ref, _) {
@@ -107,7 +107,7 @@ class HomeScreen extends ConsumerWidget {
           child: Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -151,7 +151,7 @@ class HomeScreen extends ConsumerWidget {
                       Text(
                         movie['title'] ?? 'No Title',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                       ),
 
                       const SizedBox(height: 4),

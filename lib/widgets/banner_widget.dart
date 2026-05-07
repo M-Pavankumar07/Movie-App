@@ -93,9 +93,10 @@ class BannerWidget extends StatelessWidget {
 
                   Row(
                     children: [
-                      ElevatedButton(
+                      ElevatedButton( 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
                         ),
                         onPressed: () {
                           Navigator.push(

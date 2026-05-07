@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movie/State/theme_provider.dart';
 import 'package:movie/screens/splashScreen/splash_Screen.dart';
+import 'package:movie/utils/theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +11,7 @@ void main() async{
   await Hive.openBox('favorites');
   runApp(const ProviderScope(child: MyApp()));
 }
-
+ 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
@@ -20,10 +21,10 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(themeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: themeMode, 
-      home:  SplashScreen(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
+      home: SplashScreen(),
     );
   }
 }

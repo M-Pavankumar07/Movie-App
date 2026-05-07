@@ -18,9 +18,9 @@ class SearchScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchResults = ref.watch(searchMoviesProvider);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: TextField(
           onChanged: (value){
             ref.read(searchQueryProvider.notifier).state = value;
@@ -63,11 +63,11 @@ class SearchScreen extends ConsumerWidget {
                   ),
                   title: Text(
                     movie['title'] ?? "",
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
                   subtitle: Text(
                     movie['release_date'] ?? "",
-                    style: const TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
                   ),
                   onTap: () {
                     Navigator.push(
