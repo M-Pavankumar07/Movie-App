@@ -7,7 +7,7 @@ import 'package:movie/services/trailer_service.dart';
 import 'package:movie/utils/flutter_toast_message.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
-  final Map movie;
+  final Map movie; 
   const MovieDetailsScreen({super.key, required this.movie});
 
   @override
