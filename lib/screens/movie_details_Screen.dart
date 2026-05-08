@@ -92,7 +92,7 @@ class MovieDetailsScreen extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.people),
                 label: const Text("View Cast"),
-              )
+              ),
             ],
           ),
         ),
