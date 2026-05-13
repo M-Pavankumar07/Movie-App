@@ -1,10 +1,10 @@
 # movie
 
-Movie App is a modern Flutter-based movie browsing application built using TMDB API integration with a focus on clean architecture responsive UI, performance optimization and scalable project structure. The application allows users to explore popular movies, search for titles, view details movie information, watch official trailers, browse movie cast members, manage favorites, and experience smooth navigation with dynamic dark and light theme support.
+Movie App is a modern Flutter-based movie browsing application built using TMDB API integration with a focus on clean architecture responsive UI, performance optimization and scalable project structure. The application allows users to explore popular movies, search for titles, view details movie information, watch off                                                                                        icial trailers, browse movie cast members, manage favorites, and experience smooth navigation with dynamic dark and light theme support.
 
-The project is developed using Flutter and Dart with Riverpod for state management, REST API integration for real-time movie data,Hive for local storage support, and YouTube Player integration for trailer playback.The UI is designed with reusable widgets,animated splash screen, carousel banners, toast notifications and optimized scrolling for professional user experience.
+The project is developed using Flutter and Dart with Riverpod for state management, REST API integration for real-time movie data,Hive for local storage support, and YouTube Player integration for trailer playback.The UI is designed with reusable widgets,animated splash screen, carousel banners, toast notifications for professional user experience.
 
-Current Features:-
+` Current Features:-
     1. TMDB API Integration.
     2. Popular movie browsing.
     3. Movie Search Functionality.
@@ -14,11 +14,10 @@ Current Features:-
     7. Favorites Management.
     8. Animated Splash Screen.
     9. Dark and Light Mode.
-    10. Infinite Scrolling Pagination.
-    11. Responsive and Reusable UI Components.
-    12. Toast Notifications.
-    13. Bottom Navigation With Animations.
-    14. Riverpod State Management.
+    10. Responsive and Reusable UI Components.
+    11. Toast Notifications.
+    12. Bottom Navigation With Animations.
+    13. Riverpod State Management.
 
 Upcoming Features:-
     1. Genre-Based Movie Filtering.

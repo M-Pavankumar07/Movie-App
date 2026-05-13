@@ -7,7 +7,7 @@ import 'package:movie/services/trailer_service.dart';
 import 'package:movie/utils/flutter_toast_message.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
-  final Map movie; 
+  final Map movie;
   const MovieDetailsScreen({super.key, required this.movie});
 
   @override
@@ -33,66 +33,192 @@ class MovieDetailsScreen extends ConsumerWidget {
               const SizedBox(height: 10),
               Text(
                 movie['title'] ?? "",
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                  fontSize: 20,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineMedium!.copyWith(fontSize: 20),
               ),
-              const SizedBox(height: 10),
-              Text(
-                movie['overview'] ?? "",
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                  fontSize: 16,
-                ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  const Icon(Icons.star, color: Colors.amber, size: 22),
+
+                  const SizedBox(width: 5),
+
+                  Text(
+                    "${movie['vote_average'].toStringAsFixed(1)}/10",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+
+                  const SizedBox(width: 20),
+
+                  const Icon(Icons.calendar_today, size: 18),
+
+                  const SizedBox(width: 5),
+
+                  Text(
+                    movie['release_date'] ?? "N/A",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
               ),
 
               const SizedBox(height: 20),
 
-              ElevatedButton.icon(
-                onPressed: () {
-                  favNotifier.toggleFavorite(movie);
+              Text(
+                'Overview',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              ),
 
-                  ToastMessage.showToast(
-                    isFav ? "Removed from Favorites" : "Added to Favorites",
-                    isError: isFav,
-                  );
-                },
-                icon: Icon(
-                  isFav ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.red,
+              const SizedBox(height: 10),
+
+              Text(
+                movie['overview'] ?? "No description available",
+                textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  height: 1.6,
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
-                label: Text(
-                  isFav ? "Remove from Favorites" : "Add to Favorites",
+              ),
+
+              const SizedBox(height: 25),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        children: [
+                          const Icon(Icons.movie, color: Colors.red),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Language',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            movie['original_language']?.toUpperCase() ?? "N/A",
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium!.color,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        children: [
+                          const Icon(Icons.trending_up, color: Colors.green),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Popularity',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            movie['popularity']?.toStringAsFixed(1) ?? "N/A",
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium!.color,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 30),
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        favNotifier.toggleFavorite(movie);
+
+                        ToastMessage.showToast(
+                          isFav
+                              ? "Removed from Favorites"
+                              : "Added to Favorites",
+                          isError: isFav,
+                        );
+                      },
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
+                      label: Text(
+                        isFav ? "Remove from Favorites" : "Add to Favorites",
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final trailerKey = await TrailerService.fetchTrailer(
+                          movie['id'],
+                        );
+                        if (trailerKey != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  TrailerScreen(videoId: trailerKey),
+                            ),
+                          );
+                        } else {
+                          ToastMessage.showToast(
+                            "Trailer not available",
+                            isError: true,
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.play_arrow),
+                      label: const Text("Watch Trailer"),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CastScreen(movieId: movie['id']),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.people),
+                      label: const Text("View Cast"),
+                    ),
+                  ],
                 ),
               ),
-
-              ElevatedButton.icon(
-                onPressed: () async {
-                  final trailerKey = await TrailerService.fetchTrailer(movie['id']);
-                  if (trailerKey != null){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TrailerScreen(videoId: trailerKey)),
-                    );
-                  }else{
-                    ToastMessage.showToast("Trailer not available", isError: true);
-                  }
-                },
-                icon: const Icon(Icons.play_arrow),
-                label: const Text("Watch Trailer"),
-              ),
-
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CastScreen(movieId: movie['id'])),
-                  );
-                },
-                icon: const Icon(Icons.people),
-                label: const Text("View Cast"),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

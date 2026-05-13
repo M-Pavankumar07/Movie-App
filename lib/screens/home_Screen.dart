@@ -136,15 +136,15 @@ class HomeScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          getImageUrl(movie['poster_path']),
-                          height: 170,
-                          width: 140,
-                          fit: BoxFit.cover,
+                       ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            getImageUrl(movie['poster_path']),
+                            height: 170,
+                            width: 140,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
 
                       const SizedBox(height: 8),
 
